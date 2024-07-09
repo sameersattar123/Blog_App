@@ -23,7 +23,7 @@ const App = () => {
       errorElement : <ErrorPage/>,
       children : [
         { path: '/', element: <Home/> },
-        { path: '/post/:id', element: <PostDetail/> },
+        { path: '/posts/:id', element: <PostDetail/> },
         { path: '/register', element: <Register/> },
         { path: '/login', element: <Login/> },
         { path: '/profile/:id', element: <UserProfile/> },
