@@ -264,3 +264,30 @@ footer {
     overflow: hidden;
     aspect-ratio: 1/1;
 }
+
+/* postdetail  */
+
+.post_detail {
+width: var(--form-width);
+margin-inline: auto;
+background-color: var(--color-white);
+padding: 2rem 0;
+}
+
+.post_detail_header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail_buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post_detail_thumbnail {
+  max-height: 30rem;
+  margin: 1rem 0;
+  overflow: hidden;
+}
