@@ -379,11 +379,10 @@ textarea {
   display: grid;
   place-items: center;
   text-align: center;
-
 }
 
 .profile-details {
-width: 100%;
+  width: 100%;
 }
 
 .avatar_wrapper {
@@ -409,7 +408,8 @@ width: 100%;
   visibility: hidden;
 }
 
-.avatar_form label , .profile_avatar_btn {
+.avatar_form label,
+.profile_avatar_btn {
   background-color: var(--color-gray-900);
   color: var(--color-white);
   height: 3rem;
@@ -421,7 +421,6 @@ width: 100%;
   place-items: center;
   border-radius: 50%;
   font-size: 1.2rem;
-
 }
 
 .profile_avatar_btn {
@@ -439,4 +438,41 @@ width: 100%;
   width: var(--form-width);
   margin-top: 3rem;
   margin-inline: auto;
+}
+
+/* dashboard  */
+
+.dashboard_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.dashboard_post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--color-white);
+  border-radius: var(--radius-3);
+  padding: 0.5rem 1.2rem;
+}
+
+.dashboard_post_info {
+  width: 100%;
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard_post_thumbnail {
+  width: 4rem;
+  overflow: hidden;
+  border-radius: var(--radius-1);
+}
+
+.dashboard_post_actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
