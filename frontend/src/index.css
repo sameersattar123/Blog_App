@@ -349,3 +349,26 @@ textarea {
   margin-top: 1.5rem;
   display: block;
 }
+
+/* authors */
+.authors_container {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 3rem;
+}
+
+.author {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--color-white);
+border-radius: var(--radius-3);
+transition: var(--transition);
+}
+
+.author_avatar {
+  width: 5rem;
+border: 0.3rem solid var(--color-bg);
+overflow: hidden;
+aspect-ratio: 1/1;
+border-radius: 50%;
+}
