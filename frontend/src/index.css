@@ -476,3 +476,11 @@ textarea {
   align-items: center;
   gap: 1rem;
 }
+
+/* create post  */
+
+.ql_react {
+  width: 53rem !important;
+  background-color: var(--color-white);
+  overflow: scroll;
+}
