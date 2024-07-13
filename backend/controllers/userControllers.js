@@ -1,18 +1,18 @@
-export const registerUser = (req, res) => {
-  res.send("sameer sattar");
+export const registerUser = async (req, res) => {
+  res.send("sameer sattar register");
 };
-export const loginUser = (req, res) => {
-  res.send("sameer sattar");
+export const loginUser =  async (req, res) => {
+  res.send("sameer sattar login");
 };
-export const getUser = (req, res) => {
-  res.send("sameer sattar");
+export const getUser = async (req, res) => {
+  res.send("sameer sattar get user");
 };
-export const getAuthors = (req, res) => {
-  res.send("sameer sattar");
+export const getAuthors = async (req, res) => {
+  res.send("sameer sattar get authors");
 };
-export const changeAvatar = (req, res) => {
-  res.send("sameer sattar");
+export const changeAvatar = async (req, res) => {
+  res.send("sameer sattar change avatar");
 };
-export const editUser = (req, res) => {
-  res.send("sameer sattar");
+export const editUser = async (req, res) => {
+  res.send("sameer sattar edit user ");
 };
