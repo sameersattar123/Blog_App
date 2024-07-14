@@ -2,6 +2,10 @@ import HttpError from "../models/errorModel.js";
 import { User } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import fs from "fs";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
+const __dirname = path.resolve();
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -59,7 +63,7 @@ export const loginUser = async (req, res, next) => {
     const { _id: id, name } = user;
 
     const token = jwt.sign({ id, name }, process.env.JWT_SECRET, {
-      expiresIn: '1d',
+      expiresIn: "1d",
     });
 
     res.status(200).json({ token, id, name });
@@ -67,14 +71,77 @@ export const loginUser = async (req, res, next) => {
     return next(new HttpError("Login Failed", 422));
   }
 };
-export const getUser = async (req, res) => {
-  res.send("sameer sattar get user");
+export const getUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).select("-password");
+    if (!user) {
+      return next(new HttpError("User not found", 404));
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    return next(new HttpError(error));
+  }
 };
-export const getAuthors = async (req, res) => {
-  res.send("sameer sattar get authors");
+export const getAuthors = async (req, res, next) => {
+  try {
+    const authors = await User.find().select("-password");
+    res.status(200).json(authors);
+  } catch (error) {
+    return next(new HttpError(error));
+  }
 };
-export const changeAvatar = async (req, res) => {
-  res.send("sameer sattar change avatar");
+export const changeAvatar = async (req, res, next) => {
+  try {
+    if (!req.files.avatar) {
+      return next(new HttpError("Please choose a image", 422));
+    }
+    const user = await User.findById(req.user.id);
+    if (user.avatar) {
+      fs.unlink(
+        path.join(__dirname, "..", "uploads", user.avatar, (error) => {
+          if (error) {
+            return next(new HttpError(error));
+          }
+        })
+      );
+    }
+
+    const { avatar } = req.files;
+    if (avatar.size > 500000) {
+      return next(new HttpError("Profile pic to big", 422));
+    }
+
+    let fileName;
+    fileName = avatar.name;
+    let splittedFileName = fileName.split(".");
+    let newFileName =
+      splittedFileName[0] + 
+      uuidv4() +
+      "." +
+      splittedFileName[splittedFileName.length - 1];
+    avatar.mv(
+      path.join(__dirname, ".." , "uploads", newFileName), 
+      async (error) => { 
+        if (error) {
+          return next(new HttpError(error));
+        }
+
+        const updatedAvatar = await User.findByIdAndUpdate(
+          req.user.id,
+          { avatar: newFileName },
+          { new: true }
+        );
+        if (!updatedAvatar) {
+          return next(new HttpError("Avatar couidnot be changes", 422));
+        }
+        res.status(200).json(updatedAvatar);
+      }
+    );
+  } catch (error) {
+    return next(new HttpError(error));
+  }
 };
 export const editUser = async (req, res) => {
   res.send("sameer sattar edit user ");
