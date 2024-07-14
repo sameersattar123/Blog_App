@@ -117,13 +117,13 @@ export const changeAvatar = async (req, res, next) => {
     fileName = avatar.name;
     let splittedFileName = fileName.split(".");
     let newFileName =
-      splittedFileName[0] + 
+      splittedFileName[0] +
       uuidv4() +
       "." +
       splittedFileName[splittedFileName.length - 1];
     avatar.mv(
-      path.join(__dirname, ".." , "uploads", newFileName), 
-      async (error) => { 
+      path.join(__dirname, "..", "uploads", newFileName),
+      async (error) => {
         if (error) {
           return next(new HttpError(error));
         }
@@ -143,6 +143,46 @@ export const changeAvatar = async (req, res, next) => {
     return next(new HttpError(error));
   }
 };
-export const editUser = async (req, res) => {
-  res.send("sameer sattar edit user ");
-};
+export const editUser = async (req, res, next) => {
+  try { 
+    const { name, email, currentPassword, newPassword, comfirmedNewPassword } =
+      req.body;
+    if (!name || !email || !currentPassword || !newPassword) {
+      return next(new HttpError("Fill All Feilds", 422));
+    }
+
+    const user = await User.findById(req.user.id); 
+    if (!user) { 
+      return next(new HttpError("User not found", 404));
+    }
+
+    const emailExists = await User.findOne({ email });
+    if (emailExists && (emailExists._id !=  req.user.id)) {
+      return next(new HttpError("Email Already Exists", 422));
+    }
+
+    const validateUserPassword = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!validateUserPassword) {
+      return next(new HttpError("Invalid Password", 422));
+    }
+    if (newPassword !== comfirmedNewPassword) {
+      return next(new HttpError("new password do not match", 422));
+    }
+
+    const salt = await bcrypt.genSalt(10); 
+    const hash = await bcrypt.hash(newPassword, salt);
+
+    const newInfo = await User.findByIdAndUpdate(
+      req.user.id,
+      { name, email, password: hash },
+      { new: true }
+    );
+
+    res.status(200).json(newInfo);
+  } catch (error) {
+    return next(new HttpError(error));
+  }
+}; 

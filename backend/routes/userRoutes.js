@@ -8,7 +8,7 @@ router.post('/register' , registerUser)
 router.post('/login' , loginUser)
 router.get('/:id' , getUser)
 router.get('/' , getAuthors)
-router.patch('/edit-user' , editUser)
+router.patch('/edit-user' , authMiddelware ,  editUser)
 router.post('/change-avatar' , authMiddelware ,  changeAvatar)
 
 export default router;
