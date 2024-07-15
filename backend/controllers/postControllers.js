@@ -1,7 +1,5 @@
 import HttpError from "../models/errorModel.js";
 import { User } from "../models/userModel.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import fs from "fs";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";

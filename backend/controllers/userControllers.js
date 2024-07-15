@@ -100,7 +100,7 @@ export const changeAvatar = async (req, res, next) => {
     const user = await User.findById(req.user.id);
     if (user.avatar) {
       fs.unlink(
-        path.join(__dirname, "..", "/uploads", user.avatar, (error) => {
+        path.join(__dirname, "..", "uploads", user.avatar, (error) => {
           if (error) { 
             return next(new HttpError(error));
           }
@@ -122,7 +122,7 @@ export const changeAvatar = async (req, res, next) => {
       "." +
       splittedFileName[splittedFileName.length - 1];
     avatar.mv(
-      path.join(__dirname, "..", "/uploads", newFileName),
+      path.join(__dirname, "..", "uploads", newFileName),
       async (error) => {
         if (error) {
           return next(new HttpError(error));
