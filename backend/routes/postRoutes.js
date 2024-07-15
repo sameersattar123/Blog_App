@@ -16,7 +16,7 @@ router.post("/", authMiddelware ,  createPost);
 router.get("/", getPosts);  
 router.get("/:id", getPost);
 router.get("/categories/:category", getCategoryPosts); 
-router.get("/users/:id", getUserPosts);
+router.get("/users/:id", getUserPosts); 
 router.patch("/:id", authMiddelware ,  editPost);
 router.delete("/:id", authMiddelware , deletePost);
 
