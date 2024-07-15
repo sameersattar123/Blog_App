@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: String,
+      type: String, 
       enum: [
         "Agriculture",
         "Bussiness",
@@ -17,7 +17,7 @@ const postSchema = new mongoose.Schema(
         "Investment",
         "Uncategorized",
         "Weather",
-      ],
+      ], 
     },
     description: {
       type: String,
@@ -26,6 +26,10 @@ const postSchema = new mongoose.Schema(
     creator: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    thumbnail: {
+      type: String,
+      required: true,
     },
   },
   {
