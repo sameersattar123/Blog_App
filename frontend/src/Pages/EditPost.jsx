@@ -9,7 +9,16 @@ const EditPost = () => {
   const [thumbnail, setThumbnail] = useState("");
   const [description, setDescription] = useState("");
 
-  const POST_CATEGORIES = 
+  const POST_CATEGORIES = [
+    "Agriculture",
+    "Bussiness",
+    "Education",
+    "Entertainment",
+    "Art",
+    "Investment",
+    "Uncategorized",
+    "Weather",
+  ]
   return (
     <section className="create_post">
       <div className="container">

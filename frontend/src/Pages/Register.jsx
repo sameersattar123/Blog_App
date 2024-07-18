@@ -1,24 +1,45 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Register = () => {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
-    comfirmPassword : ''
+    comfirmedPassword: "",
   });
-  
+
+  const navigate = useNavigate();
+
+  const [error, setError] = useState("");
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await axios.post('http://localhost:4000/api/users/register' , userData)
+      const newUser = await res.data;
+      console.log(newUser)
+      if (!newUser) {
+        setError('couldnot register user. Please try again')
+      }
+      navigate('/')
+    } catch (err) {
+      setError(err.res.data.message)
+    }
+  };
+
   const changeInputHandle = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
-  console.log(userData)
+  console.log(userData);
   return (
     <section className="register">
       <div className="container">
         <h2>Sign Up</h2>
-        <form action="" className="register_form form">
-          <p className="form_error_message">This is an error message</p>
+        <form className="register_form form" onSubmit={registerUser}>
+        {error && <p className="form_error_message">{error}</p>}
           <input
             type="text"
             placeholder="Full Name"
@@ -46,14 +67,18 @@ const Register = () => {
           <input
             type="password"
             placeholder="Comfirm Passwrod"
-            name="comfirmPassword"
-            value={userData.comfirmPassword}
+            name="comfirmedPassword"
+            value={userData.comfirmedPassword}
             onChange={changeInputHandle}
             required
           />
-          <button className="btn primary" type="submit">Register</button>
+          <button className="btn primary" type="submit">
+            Register
+          </button>
         </form>
-        <small>Already Have an Account? <Link to={'/login'}>Sign In</Link></small>
+        <small>
+          Already Have an Account? <Link to={"/login"}>Sign In</Link>
+        </small>
       </div>
     </section>
   );

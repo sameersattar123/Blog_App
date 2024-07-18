@@ -7,15 +7,19 @@ import userRoutes from "./routes/userRoutes.js"
 import postRoutes from "./routes/postRoutes.js"
 import { notFound , errorHandler} from "./middlewares/errorMiddleware.js"
 import path from 'path';
+import  bodyParser from'body-parser';
 const __dirname = path.resolve();
 
 const app = express()
 
 dotenv.config()
-
+ 
 app.use(cors()) 
+
+app.use(bodyParser.urlencoded({ extended: true }));
  
 app.use(express.json())
+
 
 app.use(upload())
 
