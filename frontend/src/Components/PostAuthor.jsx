@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../assets/avatar1.jpg";
-const PostAuthor = () => {
+const PostAuthor = ({authorID , createdAt}) => {
   return (
     <Link to={`/posts/users/sndxsn`} className="post_author">
       <div className="post_author_avatar">
