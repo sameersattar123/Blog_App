@@ -24,7 +24,7 @@ const Register = () => {
       if (!newUser) {
         setError('couldnot register user. Please try again')
       }
-      navigate('/')
+      navigate('/login')
     } catch (err) {
       setError(err.res.data.message)
     }

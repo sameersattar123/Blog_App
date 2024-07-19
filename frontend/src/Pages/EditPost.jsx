@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 
 const EditPost = () => {
@@ -19,6 +21,16 @@ const EditPost = () => {
     "Uncategorized",
     "Weather",
   ]
+
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <section className="create_post">
       <div className="container">

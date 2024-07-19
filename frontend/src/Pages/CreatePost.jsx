@@ -1,13 +1,24 @@
-import React, { useState } from "react";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-
+import React, { useContext, useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Uncategorized");
   const [thumbnail, setThumbnail] = useState("");
   const [description, setDescription] = useState("");
+  
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
 
   const POST_CATEGORIES = [
     "Agriculture",
@@ -45,15 +56,15 @@ const CreatePost = () => {
             value={description}
             onChange={(value) => setDescription(value)}
             className="ql_react"
-            />
-            <input
-              type="file"
-              onChange={(e) => setThumbnail(e.target.files[0])}
-              accept="jpg , png , jpeg"
-            />
-            <button className="btn primary" type="submit">
-              Create
-            </button>
+          />
+          <input
+            type="file"
+            onChange={(e) => setThumbnail(e.target.files[0])}
+            accept="jpg , png , jpeg"
+          />
+          <button className="btn primary" type="submit">
+            Create
+          </button>
         </form>
       </div>
     </section>

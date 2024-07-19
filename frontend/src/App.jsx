@@ -15,12 +15,13 @@ import Dashboard from './Pages/Dashboard'
 import Logout from './Pages/Logout'
 import EditPost from './Pages/EditPost'
 import DeletePost from './Pages/DeletePost'
+import UserProvider from './context/userContext'
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element : <Layout/>,
+      element : <UserProvider><Layout/></UserProvider>,
       errorElement : <ErrorPage/>,
       children : [
         { path: '/', element: <Home/> },
