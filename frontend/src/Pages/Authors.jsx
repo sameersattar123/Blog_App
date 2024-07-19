@@ -1,46 +1,32 @@
 import { Link } from "react-router-dom";
-import Avatar1 from "../assets/avatar1.jpg";
-import Avatar2 from "../assets/avatar2.jpg";
-import Avatar3 from "../assets/avatar3.jpg";
-import Avatar4 from "../assets/avatar4.jpg";
-import Avatar5 from "../assets/avatar5.jpg";
-import { useState } from "react";
-
-const authorsData = [
-  {
-    id: 1,
-    name: "John Doe",
-    avatar: Avatar1,
-    posts: 1,
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    avatar: Avatar2,
-    posts: 2,
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    avatar: Avatar3,
-    posts: 3,
-  },
-  {
-    id: 4,
-    name: "Bob Brown",
-    avatar: Avatar4,
-    posts: 4,
-  },
-  {
-    id: 5,
-    name: "Bobs Brssown",
-    avatar: Avatar5,
-    posts: 5,
-  },
-];
+import { useEffect, useState } from "react";
+import Loader from "../Components/Loader";
+import axios from "axios";
 
 const Authors = () => {
-  const [authors, setAuthors] = useState(authorsData)
+  const [authors, setAuthors] = useState([])
+  console.log(authors)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getAuthors = async () => {
+    setIsLoading(true)
+    try {
+     const resposne = await axios.get(`http://localhost:4000/api/users`)
+     setAuthors(resposne?.data)
+    } catch (error) {
+     console.log(error)
+    }
+
+    setIsLoading(false)
+  }
+  useEffect(() => {
+    getAuthors()
+  }, [])
+
+  if (isLoading) {
+    return <Loader loading={true} />
+  }
+  
   return (
     <section className="authors">
       <div className="container authors_container">
@@ -50,10 +36,10 @@ const Authors = () => {
               <Link
                 className="author"
                 key={author.id}
-                to={`/posts/users/${author.id}`}
+                to={`/posts/users/${author._id}`}
               >
                 <div className="author_avatar">
-                  <img src={author.avatar} alt="" />
+                  <img src={`uploads/${author.avatar}`} alt="" />
                 </div>
                 <div className="author_info">
                   <h4>{author.name}</h4>

@@ -23,7 +23,7 @@ const AuthorPosts = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [id]);
 
 
 
