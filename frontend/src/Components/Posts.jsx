@@ -39,11 +39,11 @@ const Posts = () => {
             return (
               <PostItem
                 key={i}
-                postID={post.id}
+                postID={post._id}
                 title={post.title}
                 category={post.category}
                 description={post.description}
-                authorID={post.authorID}
+                authorID={post.creator}
                 thumbnail={post.thumbnail}
                 createdAt={post.createdAt}
               />

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PostAuthor from "./PostAuthor";
 
-// D:\Mern Blog\uploads
 const PostItem = ({
   postID,
   title,
